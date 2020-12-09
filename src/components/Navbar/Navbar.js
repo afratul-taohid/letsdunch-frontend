@@ -80,9 +80,9 @@ const NavigationBar = ({ logout }) => {
         Sign up
       </Link>
 
-      {/* <Link className="nav-link" to="/verify-email">
+      <Link className="nav-link" to="/verify-email">
         Verify Email
-      </Link> */}
+      </Link>
     </>
   );
 

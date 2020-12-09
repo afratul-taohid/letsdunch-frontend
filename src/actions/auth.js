@@ -11,6 +11,9 @@ import axios from 'axios';
 import setAuthToken from '../utils/setAuthToken';
 import { setAlert } from './alert';
 
+
+const BASE_URL = 'http://api.letsdunch.com'
+
 export const loadUser = () => async (dispatch) => {
   if (localStorage.Authorization) {
     setAuthToken(localStorage.Authorization);
@@ -43,7 +46,7 @@ export const registration = (fname, lname, email, password) => async (
   const body = JSON.stringify({ fname, lname, email, password });
   try {
     const res = await axios.post(
-      'http://15.206.149.206/user/createUser',
+      `${BASE_URL}/signup`,
       body,
       config
     );
@@ -78,7 +81,7 @@ export const login = (email, password) => async (dispatch) => {
   const body = JSON.stringify({ email, password });
   try {
     const res = await axios.post(
-      'http://15.206.149.206/auth/login',
+      `${BASE_URL}/signin`,
       body,
       config
     );

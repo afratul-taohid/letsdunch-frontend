@@ -59,16 +59,22 @@ const Login = ({ login, isAuthenticated }) => {
                   <label htmlFor="email">
                     <p>Email</p>
                     <p>
-                      {!email ? (
-                        <span className="bad">
-                          {' '}
-                          Please enter your email{' '}
-                          <MoodBadIcon className="bad" />
-                        </span>
+                      {email.length !== 0 ? (
+                        /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(
+                          email
+                        ) === false ? (
+                          <span className="bad">
+                            {' '}
+                            Please enter your email{' '}
+                            <MoodBadIcon className="bad" />
+                          </span>
+                        ) : (
+                          <span>
+                            <MoodIcon className="good" />
+                          </span>
+                        )
                       ) : (
-                        <span>
-                          <MoodIcon className="good" />
-                        </span>
+                        ''
                       )}
                     </p>
                   </label>
@@ -86,16 +92,20 @@ const Login = ({ login, isAuthenticated }) => {
                   <label htmlFor="password">
                     <p>Password</p>
                     <p>
-                      {!password ? (
-                        <span className="bad">
-                          {' '}
-                          Please enter your password with 6 characters{' '}
-                          <MoodBadIcon className="bad" />
-                        </span>
+                      {password.length !== 0 ? (
+                        password.length <= 5 ? (
+                          <span className="bad">
+                            {' '}
+                            Please enter your password with 6 characters{' '}
+                            <MoodBadIcon className="bad" />
+                          </span>
+                        ) : (
+                          <span>
+                            <MoodIcon className="good" />
+                          </span>
+                        )
                       ) : (
-                        <span>
-                          <MoodIcon className="good" />
-                        </span>
+                        ''
                       )}
                     </p>
                   </label>
