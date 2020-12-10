@@ -10,40 +10,43 @@ import {
 import axios from 'axios';
 import setAuthToken from '../utils/setAuthToken';
 import { setAlert } from './alert';
+import Cookies from 'js-cookie';
 
 
-const BASE_URL = 'http://api.letsdunch.com'
+const BASE_URL = 'https://api.letsdunch.com'
 
-export const loadUser = () => async (dispatch) => {
-  if (localStorage.Authorization) {
-    setAuthToken(localStorage.Authorization);
-  }
+// export const loadUser = () => async (dispatch) => {
+//   if (Cookies.get('token')) {
+//     setAuthToken(Cookies.get('token'));
+//   }
 
-  try {
-    const res = await axios.get('http://15.206.149.206/user/me');
-    dispatch({
-      type: USER_LOADED,
-      payload: res.data,
-    });
-    console.log(res.data);
-  } catch (err) {
-    dispatch({
-      type: AUTH_ERROR,
-    });
-  }
-};
+//   try {
+//     const res = await axios.get(`${BASE_URL}/profile`);
+//     dispatch({
+//       type: USER_LOADED,
+//       payload: res.data,
+//     });
+//     console.log(res.data);
+//   } catch (err) {
+//     dispatch({
+//       type: AUTH_ERROR,
+//     });
+//   }
+// };
 
 //register
 
-export const registration = (fname, lname, email, password) => async (
+export const registration = ({firstName, lastName, email, password}) => async (
   dispatch
 ) => {
+  console.log({firstName, lastName, email, password})
   const config = {
     headers: {
       'Content-Type': 'application/json',
     },
   };
-  const body = JSON.stringify({ fname, lname, email, password });
+  const body = JSON.stringify({ firstName, lastName, email, password });
+  console.log(body);
   try {
     const res = await axios.post(
       `${BASE_URL}/signup`,
@@ -56,7 +59,7 @@ export const registration = (fname, lname, email, password) => async (
       type: REGISTER_SUCCESS,
       payload: res.data,
     });
-    dispatch(loadUser());
+    // dispatch(loadUser());
   } catch (err) {
     
     dispatch(setAlert(err.message, 'danger'));
@@ -72,7 +75,8 @@ export const registration = (fname, lname, email, password) => async (
 };
 
 //login
-export const login = (email, password) => async (dispatch) => {
+export const login = ({email, password}) => async (dispatch) => {
+  console.log({email, password})
   const config = {
     headers: {
       'Content-Type': 'application/json',
@@ -92,7 +96,7 @@ export const login = (email, password) => async (dispatch) => {
       type: LOGIN_SUCCESS,
       payload: res.data,
     });
-    dispatch(loadUser());
+    // dispatch(loadUser());
   } catch (err) {
     dispatch(setAlert(err.message, 'danger'));
     const errors = err?.response?.data?.errors;

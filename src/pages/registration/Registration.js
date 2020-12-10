@@ -18,7 +18,7 @@ const Registration = ({ setAlert, registration, isAuthenticated }) => {
 
   const { register, handleSubmit } = useForm();
   const onSubmit = (data) => {
-    registration(data.firstName, data.lastName, data.email, data.password);
+    registration({firstName: data.firstName, lastName: data.lastName, email: data.email, password: data.password});
     setFirstName('');
     setLastName('');
     setEmail('');

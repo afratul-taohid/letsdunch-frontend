@@ -8,8 +8,10 @@ import {
   LOG_OUT,
 } from '../actions/types';
 
+import Cookies from 'js-cookie';
+
 const initialState = {
-  Authorization: localStorage.getItem('Authorization'),
+  token: Cookies.get('token'),
   isAuthenticated: false,
   loading: true,
   user: null,
@@ -17,6 +19,7 @@ const initialState = {
 
 export default function (state = initialState, action) {
   const { type, payload } = action;
+  console.log(payload);
   switch (type) {
     case USER_LOADED:
       return {
@@ -27,7 +30,7 @@ export default function (state = initialState, action) {
       };
     case REGISTER_SUCCESS:
     case LOGIN_SUCCESS:
-      localStorage.setItem('Authorization', payload.Authorization);
+      Cookies.set('token', payload.data.token, { expires: 1 });
       return {
         ...state,
         ...payload,
@@ -39,10 +42,10 @@ export default function (state = initialState, action) {
     case AUTH_ERROR:
     case LOGIN_FAIL:
     case LOG_OUT:
-      localStorage.removeItem('Authorization');
+      Cookies.remove('token');
       return {
         ...state,
-        Authorization: null,
+        token: null,
         isAuthenticated: false,
         loading: false,
       };

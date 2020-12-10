@@ -16,7 +16,7 @@ const Login = ({ login, isAuthenticated }) => {
 
   const { register, handleSubmit } = useForm();
   const onSubmit = (data) => {
-    login(data.email, data.password);
+    login({email: data.email, password: data.password});
     setEmail('');
     setPassword('');
     window.scrollTo(0, 0);
