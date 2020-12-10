@@ -20,15 +20,16 @@ import Events from './pages/Events/Events';
 import Profile from './pages/profile/Profile';
 import PrivateEvents from './pages/PrivateEvents/PrivateEvents';
 import Landing from './pages/Landing/Landing';
+import JSCookies from 'js-cookie';
 
 const App = ({ alerts }) => {
-  if (localStorage.Authorization) {
-    setAuthToken(localStorage.Authorization);
+  if (JSCookies.get('token')) {
+    setAuthToken(JSCookies.get('token'));
   }
 
-  useEffect(() => {
-    store.dispatch(loadUser());
-  }, []);
+  // useEffect(() => {
+  //   store.dispatch(loadUser());
+  // }, []);
 
   return (
     <Fragment>
